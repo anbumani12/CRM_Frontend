@@ -15,10 +15,10 @@ function Create() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    
-    const form = e.target; // Get the form element
-  
+    e.preventDefault();
+
+    const form = e.target;
+
     const formData = new FormData(form);
     const formProps = Object.fromEntries(formData);
 
@@ -47,11 +47,10 @@ function Create() {
           duration: 2000,
         });
 
-        // Clear form fields
         form.reset();
 
         setTimeout(() => {
-          sendEmail(); // Call the function to send email
+          sendEmail();
         }, 2000);
       }
     } catch (error) {
@@ -61,7 +60,6 @@ function Create() {
 
   const sendEmail = async () => {
     try {
-      // Display toast message for email sent
       toast.success("Email Sent Successfully", { duration: 2000 });
     } catch (error) {
       toast.error("Failed to send email");
@@ -79,6 +77,8 @@ function Create() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        marginLeft: "16px",
+        marginRight: "16px",
       }}
     >
       <div
@@ -86,7 +86,7 @@ function Create() {
         style={{
           backgroundColor: "rgba(255, 255, 255, 0.9)",
           backdropFilter: "blur(10px)",
-          maxWidth: "500px",
+          maxWidth: "450px",
           padding: "50px",
           maxHeight: "600px",
           overflowY: "auto",

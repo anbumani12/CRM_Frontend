@@ -9,14 +9,14 @@ import { Spin } from "antd";
 
 function Viewpage() {
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true); // Initially set loading to true
+  const [loading, setLoading] = useState(true);
   const params = useParams();
   const { id } = params;
   const logout = useLogout();
 
   const getData = async () => {
     try {
-      setLoading(true); // Set loading to true when fetching data
+      setLoading(true);
       const res = await AxiosService.get(`${ApiRoutes.SERVICE.path}/${id}`, {
         authenticate: ApiRoutes.SERVICE.authenticate,
       });
@@ -27,13 +27,13 @@ function Viewpage() {
       toast.error(error.response.data.message);
       if (error.response.status === 401) logout();
     } finally {
-      setLoading(false); // Set loading to false after data fetching is complete
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (id) getData();
-  }, [id]); // Fetch data whenever the id changes
+  }, [id]);
 
   const changeStatus = async (payload) => {
     try {
@@ -65,14 +65,18 @@ function Viewpage() {
 
   return (
     <>
-      {/* Render the loading spinner while loading */}
       {loading ? (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
           <Spin size="large" tip="Loading..." />
         </div>
       ) : (
         <div className="details-wrapper">
-          <Table striped bordered hover style={{ tableLayout: "fixed", width: "100%" }}>
+          <Table
+            striped
+            bordered
+            hover
+            style={{ tableLayout: "fixed", width: "100%" }}
+          >
             <thead>
               <tr>
                 <th style={{ width: "30%" }}>Item</th>

@@ -36,7 +36,7 @@ const items = [
 const Createpage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [logoutClicked, setLogoutClicked] = useState(false);
-  const [loading, setLoading] = useState(false); // Add loading state for Spin
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const onCollapse = (collapsed) => {
@@ -94,7 +94,7 @@ const Createpage = () => {
             padding: "0 16px",
           }}
         >
-          <div style={{ color: "#fff", fontSize: "17px" }}>Create Request</div>
+          <div style={{ color: "#fff", fontSize: "17px",marginLeft:"15px"  }}>Create Request</div>
           <div>
             <button
               onClick={handleLogout}
@@ -110,7 +110,7 @@ const Createpage = () => {
           </div>
         </Header>
         <Content style={{ margin: "16px 16px" }}>
-          <div style={{ marginTop: "-5px",marginBottom:"5px"}}>
+          <div className="create">
             <Breadcrumb>
               <Breadcrumb.Item>Create Request</Breadcrumb.Item>
             </Breadcrumb>

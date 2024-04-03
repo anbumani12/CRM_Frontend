@@ -23,7 +23,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [loading, setLoading] = useState(false); // State for loading spinner
+  const [loading, setLoading] = useState(false); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -74,7 +74,7 @@ function Login() {
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
     } finally {
-      setLoading(false); // Deactivate loading spinner
+      setLoading(false); 
     }
   };
 
