@@ -75,7 +75,7 @@ const Statuspage = () => {
       >
         <div className="logoo">
           <img
-            src="https://static.vecteezy.com/system/resources/previews/009/628/297/non_2x/crm-logo-crm-letter-crm-letter-logo-design-initials-crm-logo-linked-with-circle-and-uppercase-monogram-logo-crm-typography-for-technology-business-and-real-estate-brand-vector.jpg"
+            src="https://i.ibb.co/JqznVLM/LOGO.png"
             alt=""
             style={{
               width: "60px",

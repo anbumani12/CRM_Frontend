@@ -1,103 +1,166 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import AxiosService from "../utils/AxiosService";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import ApiRoutes from "../utils/ApiRoutes";
-import Table from "react-bootstrap/Table";
-import { Spin } from "antd";
 
-function Status() {
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+function Create() {
+  const navigate = useNavigate();
 
-  const getSrDetails = async (e) => {
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    const srno = formProps.srno;
 
-    if (!srno) {
-      if (!showToast) {
-        toast.error("Please enter a valid SR No");
-        setShowToast(true);
-      }
+    const requiredFields = [
+      "name",
+      "email",
+      "mobile",
+      "category",
+      "title",
+      "description",
+    ];
+    const emptyFields = requiredFields.filter((field) => !formProps[field]);
+
+    if (emptyFields.length > 0) {
+      toast.error("All fields are required");
       return;
     }
 
-    setLoading(true); // Set loading to true when fetching data
-
     try {
-      const res = await AxiosService.get(`${ApiRoutes.SR.path}/${srno}`, {
-        authenticate: ApiRoutes.SR.authenticate,
+      let res = await AxiosService.post(ApiRoutes.SR_CREATE.path, formProps, {
+        authenticate: ApiRoutes.SR_CREATE.authenticate,
       });
 
       if (res.status === 200) {
-        if (!showToast) {
-          toast.success("Data Fetch Successfully");
-          setShowToast(true);
-        }
-        setData(res.data.data);
+        toast.success("Service Request Created Successfully", {
+          duration: 2000,
+        });
+        setTimeout(() => {
+          navigate("/status");
+          sendEmail(); // Call the function to send email
+        }, 2000);
       }
     } catch (error) {
-      if (!showToast) {
-        toast.error(error.response.data.message);
-        setShowToast(true);
-      }
-    } finally {
-      setLoading(false); // Set loading to false after data fetching is complete
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const sendEmail = async () => {
+    try {
+      // Display toast message for email sent
+      toast.success("Email Sent Successfully", { duration: 2000 });
+    } catch (error) {
+      toast.error("Failed to send email");
     }
   };
 
   return (
-    <div className="backgroundWrapper">
-      <div className="loginWrapper border rounded shadow-sm p-3">
-        <Form onSubmit={getSrDetails}>
-          <Form.Group className="mb-3">
-            <Form.Label>Service Request Number:</Form.Label>
-            <Form.Control type="text" placeholder="Enter SR No" name="srno" />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-      </div>
-      {loading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: 200,
-          }}
-        >
-          <Spin size="large" />
+    <div
+      className="backWrapper"
+      style={{
+        backgroundImage: `url("https://t3.ftcdn.net/jpg/02/58/66/94/360_F_258669413_rLs4pnnhkUkExE9m8EZuhGbnkJI0izgQ.jpg")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "83vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: "16px",
+        marginRight: "16px",
+      }}
+    >
+      <div
+        className="loginWrapper border rounded shadow-sm p-4"
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+          backdropFilter: "blur(10px)",
+          maxWidth: "500px",
+          padding: "50px",
+          height: "75vh",
+        }}
+      >
+        <div>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-2" controlId="formName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Name"
+                name="name"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2" controlId="formEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                name="email"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2" controlId="formMobile">
+              <Form.Label>Mobile</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Mobile"
+                name="mobile"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2" controlId="formCategory">
+              <Form.Label>Category</Form.Label>
+              <Form.Select defaultValue={"default"} name="category" required>
+                <option value="default" disabled>
+                  Select Category
+                </option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Housekeeping">Housekeeping</option>
+                <option value="Enquiry">Enquiry</option>
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-2" controlId="formTitle">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Title"
+                name="title"
+                required
+              />
+            </Form.Group>
+            <div style={{ marginBottom: "15px" }}></div>
+            <Form.Group className="mb-2" controlId="formDescription">
+              <FloatingLabel controlId="formDescription" label="Description">
+                <Form.Control
+                  as="textarea"
+                  placeholder="Leave a comment here"
+                  style={{ height: "80px" }}
+                  name="description"
+                  required
+                />
+              </FloatingLabel>
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
         </div>
-      ) : (
-        Object.keys(data).length > 0 && (
-          <div className="detail-wrapper">
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(data).map((e, i) => (
-                  <tr key={i}>
-                    <td>{e.toUpperCase()}</td>
-                    <td>{data[e] !== null ? data[e] : "-"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        )
-      )}
+      </div>
     </div>
   );
 }
 
-export default Status;
+export default Create;
