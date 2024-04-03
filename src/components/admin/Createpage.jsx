@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu, Breadcrumb, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,7 +7,7 @@ import {
   faCirclePlus,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import Create from "../Create";
+import Create from "../Create"
 import toast from "react-hot-toast";
 
 const { Header, Content, Sider } = Layout;
@@ -36,6 +36,7 @@ const items = [
 const Createpage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [logoutClicked, setLogoutClicked] = useState(false);
+  const [loading, setLoading] = useState(false); // Add loading state for Spin
   const navigate = useNavigate();
 
   const onCollapse = (collapsed) => {
@@ -44,6 +45,7 @@ const Createpage = () => {
 
   const handleLogout = () => {
     setLogoutClicked(true);
+    setLoading(true); 
     toast
       .promise(
         new Promise((resolve) => {
@@ -58,6 +60,7 @@ const Createpage = () => {
         }
       )
       .then(() => {
+        setLoading(false);
         navigate("/admin/dashboard");
       });
   };
@@ -91,7 +94,7 @@ const Createpage = () => {
             padding: "0 16px",
           }}
         >
-          <div style={{ color: "#fff", fontSize: "17px" }}>Create Request</div>
+          <div style={{ color: "#fff", fontSize: "17px" }}>Check Status</div>
           <div>
             <button
               onClick={handleLogout}
@@ -109,7 +112,7 @@ const Createpage = () => {
         <Content style={{ margin: "0 16px" }}>
           <div style={{ margin: "16px 0" }}>
             <Breadcrumb>
-              <Breadcrumb.Item>Create Request</Breadcrumb.Item>
+              <Breadcrumb.Item>Check Status</Breadcrumb.Item>
             </Breadcrumb>
           </div>
           <div
@@ -121,7 +124,20 @@ const Createpage = () => {
               borderRadius: "5px",
             }}
           >
-            <Create />
+            {loading ? ( 
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  minHeight: 200,
+                }}
+              >
+                <Spin size="large" />
+              </div>
+            ) : (
+              <Create />
+            )}
           </div>
         </Content>
       </Layout>

@@ -35,19 +35,34 @@ const items = [
 
 const Statuspage = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [logoutClicked, setLogoutClicked] = useState(false);
+  const [loading, setLoading] = useState(false); // Add loading state for Spin
   const navigate = useNavigate();
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
 
-  const handleDataFetching = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+  const handleLogout = () => {
+    setLogoutClicked(true);
+    setLoading(true); 
+    toast
+      .promise(
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, 2000);
+        }),
+        {
+          loading: "Loading...",
+          success: "Back to Dashboard",
+          error: "Logout Failed",
+        }
+      )
+      .then(() => {
+        setLoading(false);
+        navigate("/admin/dashboard");
+      });
   };
 
   return (
@@ -82,7 +97,7 @@ const Statuspage = () => {
           <div style={{ color: "#fff", fontSize: "17px" }}>Check Status</div>
           <div>
             <button
-              onClick={handleDataFetching}
+              onClick={handleLogout}
               style={{
                 marginRight: "10px",
                 color: "#fff",
@@ -90,7 +105,7 @@ const Statuspage = () => {
                 border: "none",
               }}
             >
-              Submit
+              Back
             </button>
           </div>
         </Header>
@@ -109,7 +124,7 @@ const Statuspage = () => {
               borderRadius: "5px",
             }}
           >
-            {loading ? (
+            {loading ? ( 
               <div
                 style={{
                   display: "flex",
