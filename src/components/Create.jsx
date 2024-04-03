@@ -82,7 +82,7 @@ function Create() {
         style={{
           backgroundColor: "rgba(255, 255, 255, 0.9)",
           backdropFilter: "blur(10px)",
-          maxWidth: "500px",
+          maxWidth: "450px",
           padding: "50px",
           height: "75vh",
         }}
