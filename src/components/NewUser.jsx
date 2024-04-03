@@ -119,7 +119,7 @@ export default function SignUp() {
         <Container component="main" maxWidth="xs">
           <Box
             sx={{
-              mt: 11,
+              mt: 9,
               border: "1px solid #ccc",
               borderRadius: "5px",
               padding: "20px",
@@ -205,7 +205,7 @@ export default function SignUp() {
               >
                 Sign Up
               </Button>
-              <Grid container justifyContent="flex-end">
+              <Grid container justifyContent="center">
                 <Grid item>
                   <Link to="/" variant="body2">
                     Already have an account? Sign in
