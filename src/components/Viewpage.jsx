@@ -5,16 +5,19 @@ import ApiRoutes from "../utils/ApiRoutes";
 import Table from "react-bootstrap/Table";
 import { useParams } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
+import { Spin } from "antd";
 
 function Viewpage() {
-  let [data, setData] = useState({});
-  let params = useParams();
-  let { id } = params;
-  let logout = useLogout();
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true); // Initially set loading to true
+  const params = useParams();
+  const { id } = params;
+  const logout = useLogout();
 
   const getData = async () => {
     try {
-      let res = await AxiosService.get(`${ApiRoutes.SERVICE.path}/${id}`, {
+      setLoading(true); // Set loading to true when fetching data
+      const res = await AxiosService.get(`${ApiRoutes.SERVICE.path}/${id}`, {
         authenticate: ApiRoutes.SERVICE.authenticate,
       });
       if (res.status === 200) {
@@ -23,12 +26,18 @@ function Viewpage() {
     } catch (error) {
       toast.error(error.response.data.message);
       if (error.response.status === 401) logout();
+    } finally {
+      setLoading(false); // Set loading to false after data fetching is complete
     }
   };
 
+  useEffect(() => {
+    if (id) getData();
+  }, [id]); // Fetch data whenever the id changes
+
   const changeStatus = async (payload) => {
     try {
-      let res = await AxiosService.put(
+      const res = await AxiosService.put(
         `${ApiRoutes.CHANGE_STATUS.path}/${payload.id}`,
         payload,
         {
@@ -46,7 +55,7 @@ function Viewpage() {
     }
   };
 
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
@@ -54,33 +63,35 @@ function Viewpage() {
     changeStatus(formProps);
   };
 
-  useEffect(() => {
-    if (id) getData();
-  }, []);
-
   return (
     <>
-      <div className="details-wrapper">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(data).map((e, i) => {
-              return (
-                <tr key={i}>
-                  <td>{e}</td>
-                  <td>{data[e] !== null ? data[e] : "-"}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>
-      <div></div>
+      {/* Render the loading spinner while loading */}
+      {loading ? (
+        <div style={{ textAlign: "center", marginTop: "50px" }}>
+          <Spin size="large" tip="Loading..." />
+        </div>
+      ) : (
+        <div className="details-wrapper">
+          <Table striped bordered hover style={{ tableLayout: "fixed", width: "100%" }}>
+            <thead>
+              <tr>
+                <th style={{ width: "30%" }}>Item</th>
+                <th style={{ width: "70%" }}>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(data).map((e, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{e}</td>
+                    <td>{data[e] !== null ? data[e] : "-"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </>
   );
 }

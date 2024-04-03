@@ -21,6 +21,7 @@ function AdminDashboard() {
 
   const getDashboardCount = async () => {
     try {
+      setLoading(true);
       let res = await AxiosService.get(ApiRoutes.DASHBOARD_COUNT.path, {
         authenticate: ApiRoutes.DASHBOARD_COUNT.authenticate,
       });
@@ -29,14 +30,15 @@ function AdminDashboard() {
         setCountData(res?.data);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
-      if (error.response.status === 401) logout();
+      handleError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const loadData = async (statusAction) => {
     try {
-      setLoading(true); // Set loading to true when fetching data
+      setLoading(true);
       let res = await AxiosService.get(
         `${ApiRoutes.LIST.path}/${statusAction}`,
         {
@@ -49,19 +51,39 @@ function AdminDashboard() {
         const ress = res.data.data;
         if (statusAction === "Assigned") {
           setAssigned(ress.length);
+          setOpened(0);
+          setClosed(0);
         }
         if (statusAction === "Open") {
           setOpened(ress.length);
+          setAssigned(0);
+          setClosed(0);
         }
         if (statusAction === "Closed") {
           setClosed(ress.length);
+          setOpened(0);
+          setAssigned(0);
         }
       }
     } catch (error) {
-      toast.error(error.response.data.message);
-      if (error.response.status === 401) logout();
+      handleError(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleError = (error) => {
+    if (error.response) {
+      if (error.response.status === 401) {
+        toast.error("Unauthorized! Please login again.");
+        logout();
+      } else {
+        toast.error(error.response.data.message);
+      }
+    } else if (error.request) {
+      toast.error("Network error! Please try again later.");
+    } else {
+      toast.error("An error occurred! Please try again later.");
     }
   };
 
@@ -140,7 +162,7 @@ function AdminDashboard() {
       </div>
 
       <div>
-        {data.length ? (
+        {!loading && data.length ? (
           <div
             className="details-wrapper border rounded shadow-sm p-3"
             style={{
@@ -189,15 +211,17 @@ function AdminDashboard() {
             </Table>
           </div>
         ) : (
-          <h3
-            style={{
-              textAlign: "center",
-              marginTop: "100px",
-              marginLeft: "40px",
-            }}
-          >
-            Click the Card to Get Data
-          </h3>
+          !loading && (
+            <h3
+              style={{
+                textAlign: "center",
+                marginTop: "100px",
+                marginLeft: "40px",
+              }}
+            >
+              Click the Card to Get Data
+            </h3>
+          )
         )}
       </div>
     </>

@@ -15,8 +15,11 @@ function Create() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
+    e.preventDefault(); // Prevent the default form submission behavior
+    
+    const form = e.target; // Get the form element
+  
+    const formData = new FormData(form);
     const formProps = Object.fromEntries(formData);
 
     const requiredFields = [
@@ -43,8 +46,11 @@ function Create() {
         toast.success("Service Request Created Successfully", {
           duration: 2000,
         });
+
+        // Clear form fields
+        form.reset();
+
         setTimeout(() => {
-          navigate("/status");
           sendEmail(); // Call the function to send email
         }, 2000);
       }
@@ -69,7 +75,7 @@ function Create() {
         backgroundImage: `url("https://t3.ftcdn.net/jpg/02/58/66/94/360_F_258669413_rLs4pnnhkUkExE9m8EZuhGbnkJI0izgQ.jpg")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        minHeight: "100vh",
+        minHeight: "83vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -82,83 +88,94 @@ function Create() {
           backdropFilter: "blur(10px)",
           maxWidth: "500px",
           padding: "50px",
+          maxHeight: "600px",
+          overflowY: "auto",
         }}
       >
-        <h3>Report us here</h3>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formName">
-            <Form.Label>
-              Name<span className="required">*</span>
-            </Form.Label>
-            <Form.Control type="text" placeholder="Name" name="name" required />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formEmail">
-            <Form.Label>
-              Email address<span className="required">*</span>
-            </Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              name="email"
-              required
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formMobile">
-            <Form.Label>
-              Mobile<span className="required">*</span>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Mobile"
-              name="mobile"
-              required
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formCategory">
-            <Form.Label>
-              Category<span className="required">*</span>
-            </Form.Label>
-            <Form.Select defaultValue={"default"} name="category" required>
-              <option value="default" disabled>
-                Select Category
-              </option>
-              <option value="Maintenance">Maintenance</option>
-              <option value="Housekeeping">Housekeeping</option>
-              <option value="Enquiry">Enquiry</option>
-            </Form.Select>
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formTitle">
-            <Form.Label>
-              Title<span className="required">*</span>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Title"
-              name="title"
-              required
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formDescription">
-            <FloatingLabel controlId="formDescription" label="Description">
+        <div>
+          <h3 style={{ marginTop: "-20px" }}>Report us here</h3>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-2" controlId="formName">
+              <Form.Label>
+                Name<span className="required">*</span>
+              </Form.Label>
               <Form.Control
-                as="textarea"
-                placeholder="Leave a comment here"
-                style={{ height: "100px" }}
-                name="description"
+                type="text"
+                placeholder="Name"
+                name="name"
                 required
               />
-            </FloatingLabel>
-          </Form.Group>
+            </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
+            <Form.Group className="mb-2" controlId="formEmail">
+              <Form.Label>
+                Email address<span className="required">*</span>
+              </Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                name="email"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2" controlId="formMobile">
+              <Form.Label>
+                Mobile<span className="required">*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Mobile"
+                name="mobile"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-2" controlId="formCategory">
+              <Form.Label>
+                Category<span className="required">*</span>
+              </Form.Label>
+              <Form.Select defaultValue={"default"} name="category" required>
+                <option value="default" disabled>
+                  Select Category
+                </option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Housekeeping">Housekeeping</option>
+                <option value="Enquiry">Enquiry</option>
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-2" controlId="formTitle">
+              <Form.Label>
+                Title<span className="required">*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Title"
+                name="title"
+                required
+              />
+            </Form.Group>
+
+            <div style={{ marginBottom: "15px" }}></div>
+
+            <Form.Group className="mb-2" controlId="formDescription">
+              <FloatingLabel controlId="formDescription" label="Description">
+                <Form.Control
+                  as="textarea"
+                  placeholder="Leave a comment here"
+                  style={{ height: "80px" }}
+                  name="description"
+                  required
+                />
+              </FloatingLabel>
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </div>
       </div>
     </div>
   );

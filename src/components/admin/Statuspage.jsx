@@ -109,21 +109,13 @@ const Statuspage = () => {
             </button>
           </div>
         </Header>
-        <Content style={{ margin: "0 16px" }}>
-          <div style={{ margin: "16px 0" }}>
+        <Content style={{ margin: "16px 16px" }}>
+          <div style={{ marginTop: "-5px",marginBottom:"5px"}}>
             <Breadcrumb>
               <Breadcrumb.Item>Check Status</Breadcrumb.Item>
             </Breadcrumb>
           </div>
-          <div
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: "#fff",
-              borderRadius: "5px",
-            }}
-          >
+          <div >
             {loading ? ( 
               <div
                 style={{

@@ -16,13 +16,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
-// Add the loading spin code
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 function Login() {
   const navigate = useNavigate();
-  const [toastShown, setToastShown] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -30,14 +27,14 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true); // Activate loading spinner
+    setLoading(true);
 
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
     if (!formProps.email) {
       setEmailError("Email is required");
-      setLoading(false); // Deactivate loading spinner
+      setLoading(false); 
       return;
     } else {
       setEmailError("");
@@ -45,7 +42,7 @@ function Login() {
 
     if (!formProps.password) {
       setPasswordError("Password is required");
-      setLoading(false); // Deactivate loading spinner
+      setLoading(false); 
       return;
     } else {
       setPasswordError("");
@@ -68,23 +65,14 @@ function Login() {
         sessionStorage.setItem("role", res.data.role);
         sessionStorage.setItem("name", res.data.name);
 
-        if (!toastShown) {
-          toast.success("Log in Successfully");
-          setToastShown(true);
-        }
+        toast.success("Log in Successfully");
         await new Promise((resolve) => setTimeout(resolve, 2000));
         navigate("/admin/dashboard");
       } else {
-        if (!toastShown) {
-          toast.error(res.data.message);
-          setToastShown(true);
-        }
+        toast.error(res.data.message || "Incorrect credentials");
       }
     } catch (error) {
-      if (!toastShown) {
-        toast.error(error.response?.data?.message || "An error occurred");
-        setToastShown(true);
-      }
+      toast.error(error.response?.data?.message || "An error occurred");
     } finally {
       setLoading(false); // Deactivate loading spinner
     }
@@ -186,12 +174,17 @@ function Login() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  style={{ position: "relative" }}
                 >
-                  {loading ? (
-                    <Spin tip="Loading" size="small" /> // Show loading spin if loading state is true
-                  ) : (
-                    "Sign In"
-                  )}
+                  <span
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "inline-block",
+                    }}
+                  >
+                    {loading ? <Spin tip="Loading" size="small" /> : "Sign In"}
+                  </span>
                 </Button>
                 <Link
                   to="/new-user"
