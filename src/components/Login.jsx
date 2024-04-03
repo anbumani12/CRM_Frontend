@@ -17,21 +17,27 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
+// Add the loading spin code
+import { Spin } from 'antd';
+
 function Login() {
   const navigate = useNavigate();
   const [toastShown, setToastShown] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false); // State for loading spinner
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // Activate loading spinner
 
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
     if (!formProps.email) {
       setEmailError("Email is required");
+      setLoading(false); // Deactivate loading spinner
       return;
     } else {
       setEmailError("");
@@ -39,6 +45,7 @@ function Login() {
 
     if (!formProps.password) {
       setPasswordError("Password is required");
+      setLoading(false); // Deactivate loading spinner
       return;
     } else {
       setPasswordError("");
@@ -78,6 +85,8 @@ function Login() {
         toast.error(error.response?.data?.message || "An error occurred");
         setToastShown(true);
       }
+    } finally {
+      setLoading(false); // Deactivate loading spinner
     }
   };
 
@@ -118,11 +127,6 @@ function Login() {
             elevation={6}
             square
           >
-            {/* <img
-              src="http://miebach.thelinkworks.com:3000/_next/static/media/sign-bg1.b8a93cd3.png"
-              alt=""
-              style={{ marginLeft: "-110px", opacity: "0.2"}}
-            /> */}
             <Box
               sx={{
                 my: 8,
@@ -183,7 +187,11 @@ function Login() {
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  Sign In
+                  {loading ? (
+                    <Spin tip="Loading" size="small" /> // Show loading spin if loading state is true
+                  ) : (
+                    "Sign In"
+                  )}
                 </Button>
                 <Link
                   to="/new-user"

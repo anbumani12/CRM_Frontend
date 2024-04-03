@@ -50,18 +50,21 @@ export default function SignUp() {
     }
 
     try {
-      const response = await fetch("https://capstone-vbjb.onrender.com/users/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "https://capstone-vbjb.onrender.com/users/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+          }),
+        }
+      );
 
       if (response.ok) {
         toast.success("Account created successfully", { autoClose: 2000 });

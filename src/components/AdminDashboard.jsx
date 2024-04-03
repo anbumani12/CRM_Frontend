@@ -7,7 +7,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
-import { Spin } from "antd"; 
+import { Spin } from "antd";
 
 function AdminDashboard() {
   const [countData, setCountData] = useState([]);
@@ -15,7 +15,7 @@ function AdminDashboard() {
   const [assigned, setAssigned] = useState([]);
   const [opened, setOpened] = useState([]);
   const [closed, setClosed] = useState([]);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const logout = useLogout();
   const navigate = useNavigate();
 
@@ -61,7 +61,7 @@ function AdminDashboard() {
       toast.error(error.response.data.message);
       if (error.response.status === 401) logout();
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -146,7 +146,7 @@ function AdminDashboard() {
             style={{
               marginLeft: "70px",
               marginRight: "100px",
-              marginTop: "80px", 
+              marginTop: "80px",
               width: "90%",
             }}
           >

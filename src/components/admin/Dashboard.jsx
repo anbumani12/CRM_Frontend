@@ -44,22 +44,24 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     setLogoutClicked(true);
-    toast.promise(
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 2000);
-      }),
-      {
-        loading: "Logging out...",
-        success: "Logout Successfully",
-        error: "Logout Failed",
-      }
-    ).then(() => {
-      navigate("/");
-    });
+    toast
+      .promise(
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, 2000);
+        }),
+        {
+          loading: "Logging out...",
+          success: "Logout Successfully",
+          error: "Logout Failed",
+        }
+      )
+      .then(() => {
+        navigate("/");
+      });
   };
-  
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
