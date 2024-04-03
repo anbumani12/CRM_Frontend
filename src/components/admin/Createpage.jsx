@@ -7,7 +7,7 @@ import {
   faCirclePlus,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import Create from "../Create"
+import Create from "../Create";
 import toast from "react-hot-toast";
 
 const { Header, Content, Sider } = Layout;
@@ -36,7 +36,7 @@ const items = [
 const Createpage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [logoutClicked, setLogoutClicked] = useState(false);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onCollapse = (collapsed) => {
@@ -45,7 +45,7 @@ const Createpage = () => {
 
   const handleLogout = () => {
     setLogoutClicked(true);
-    setLoading(true); 
+    setLoading(true);
     toast
       .promise(
         new Promise((resolve) => {
@@ -73,6 +73,18 @@ const Createpage = () => {
         onCollapse={onCollapse}
         style={{ paddingTop: "64px" }}
       >
+        <div className="logoo">
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/009/628/297/non_2x/crm-logo-crm-letter-crm-letter-logo-design-initials-crm-logo-linked-with-circle-and-uppercase-monogram-logo-crm-typography-for-technology-business-and-real-estate-brand-vector.jpg"
+            alt=""
+            style={{
+              width: "60px",
+              height: "60px",
+              marginLeft: "40px",
+              marginTop: "-80px",
+            }}
+          />
+        </div>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["2"]} mode="inline">
           {items.map((item) => (
@@ -94,7 +106,9 @@ const Createpage = () => {
             padding: "0 16px",
           }}
         >
-          <div style={{ color: "#fff", fontSize: "17px",marginLeft:"15px"  }}>Create Request</div>
+          <div style={{ color: "#fff", fontSize: "17px", marginLeft: "15px" }}>
+            Create Request
+          </div>
           <div>
             <button
               onClick={handleLogout}
@@ -115,22 +129,21 @@ const Createpage = () => {
               <Breadcrumb.Item>Create Request</Breadcrumb.Item>
             </Breadcrumb>
           </div>
-         
-            {loading ? ( 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  minHeight: 200,
-                }}
-              >
-                <Spin size="large" />
-              </div>
-            ) : (
-              <Create />
-            )}
-          
+
+          {loading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: 200,
+              }}
+            >
+              <Spin size="large" />
+            </div>
+          ) : (
+            <Create />
+          )}
         </Content>
       </Layout>
     </Layout>

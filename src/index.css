@@ -54,13 +54,11 @@
   opacity: 0.5;
 }
 
-.create{
+.create {
   margin-top: -5px;
   margin-bottom: 5px;
   margin-left: 20px;
 }
-
-
 
 .loginWrapper {
   z-index: 1;
@@ -109,34 +107,6 @@
 
 .details-wrapper {
   background-color: white;
-}
-
-
-
-.head{
-
-  color: rgb(72, 71, 71) ;
-  font-weight: bold;
-}
-
-.head:hover {
-  color: #1976d2;
-  font-weight: bold;
-}
-
-.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
-  background-color: white !important;
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.css-1l8j5k8 {
-  background-color: hwb(195 23% 5%) !important;
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.css-1l8j5k8 {
-  background-color: rgb(255, 255, 255) !important;
-  color: rgba(0, 0, 0, 0.87);
 }
 
 
