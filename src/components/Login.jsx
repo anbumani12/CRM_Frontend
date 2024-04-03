@@ -89,7 +89,7 @@ function Login() {
         <Grid
           container
           component="main"
-          sx={{ height: "100vh", width: "119%", marginLeft: "-132px" }}
+          sx={{ height: "100vh", width: "119%", marginLeft: "-127px" }}
         >
           <CssBaseline />
           <Grid
