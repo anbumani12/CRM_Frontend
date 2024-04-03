@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu, Breadcrumb, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,31 +35,19 @@ const items = [
 
 const Statuspage = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [logoutClicked, setLogoutClicked] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
 
-  const handleLogout = () => {
-    setLogoutClicked(true);
-    toast
-      .promise(
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve();
-          }, 2000);
-        }),
-        {
-          loading: "Loading...",
-          success: "Back to Dashboard",
-          error: "Logout Failed",
-        }
-      )
-      .then(() => {
-        navigate("/admin/dashboard");
-      });
+  const handleDataFetching = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
 
   return (
@@ -94,7 +82,7 @@ const Statuspage = () => {
           <div style={{ color: "#fff", fontSize: "17px" }}>Check Status</div>
           <div>
             <button
-              onClick={handleLogout}
+              onClick={handleDataFetching}
               style={{
                 marginRight: "10px",
                 color: "#fff",
@@ -102,7 +90,7 @@ const Statuspage = () => {
                 border: "none",
               }}
             >
-              Back
+              Submit
             </button>
           </div>
         </Header>
@@ -121,7 +109,20 @@ const Statuspage = () => {
               borderRadius: "5px",
             }}
           >
-            <Status />
+            {loading ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  minHeight: 200,
+                }}
+              >
+                <Spin size="large" />
+              </div>
+            ) : (
+              <Status />
+            )}
           </div>
         </Content>
       </Layout>

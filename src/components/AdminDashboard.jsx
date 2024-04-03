@@ -7,16 +7,19 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
+import { Spin } from "antd"; 
 
 function AdminDashboard() {
-  let [countData, setCountData] = useState([]);
-  let [data, setData] = useState([]);
-  let [assigned, setAssigned] = useState([]);
-  let [opened, setOpened] = useState([]);
-  let [closed, setClosed] = useState([]);
-  let logout = useLogout();
-  let navigate = useNavigate();
-  let getDashboardCount = async () => {
+  const [countData, setCountData] = useState([]);
+  const [data, setData] = useState([]);
+  const [assigned, setAssigned] = useState([]);
+  const [opened, setOpened] = useState([]);
+  const [closed, setClosed] = useState([]);
+  const [loading, setLoading] = useState(false); 
+  const logout = useLogout();
+  const navigate = useNavigate();
+
+  const getDashboardCount = async () => {
     try {
       let res = await AxiosService.get(ApiRoutes.DASHBOARD_COUNT.path, {
         authenticate: ApiRoutes.DASHBOARD_COUNT.authenticate,
@@ -31,8 +34,9 @@ function AdminDashboard() {
     }
   };
 
-  let loadData = async (statusAction) => {
+  const loadData = async (statusAction) => {
     try {
+      setLoading(true); // Set loading to true when fetching data
       let res = await AxiosService.get(
         `${ApiRoutes.LIST.path}/${statusAction}`,
         {
@@ -56,6 +60,8 @@ function AdminDashboard() {
     } catch (error) {
       toast.error(error.response.data.message);
       if (error.response.status === 401) logout();
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -128,6 +134,11 @@ function AdminDashboard() {
           </Card>
         </div>
       </div>
+
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        {loading && <Spin size="large" tip="Loading..." />}
+      </div>
+
       <div>
         {data.length ? (
           <div
@@ -135,7 +146,7 @@ function AdminDashboard() {
             style={{
               marginLeft: "70px",
               marginRight: "100px",
-              marginTop: "60px",
+              marginTop: "80px", 
               width: "90%",
             }}
           >
