@@ -107,6 +107,7 @@ function Login() {
                   : t.palette.grey[900],
               backgroundSize: "cover",
               backgroundPosition: "center",
+              height: "calc(100vh - 10px)" 
             }}
           />
           <Grid
@@ -130,6 +131,7 @@ function Login() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

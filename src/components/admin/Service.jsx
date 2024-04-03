@@ -45,11 +45,26 @@ const Service = () => {
 
   const handleLogout = () => {
     setLogoutClicked(true);
-    setTimeout(() => {
-      navigate("/admin/dashboard");
-    },2000);
+    toast
+      .promise(
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, 2000);
+        }),
+        {
+          loading: "Loading...",
+          success: "Back to Dashboard",
+          error: "Logout Failed",
+        }
+      )
+      .then(() => {
+        navigate("/admin/dashboard");
+      });
   };
 
+
+  
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
