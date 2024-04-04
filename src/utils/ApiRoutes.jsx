@@ -10,7 +10,7 @@ const ApiRoutes = {
   
     SR_CREATE: {
       path: "/sr/create",
-      authenticate: false,
+      authenticate: true,
     },
     SR: {
       path: "/sr",
