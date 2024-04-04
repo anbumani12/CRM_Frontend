@@ -9,6 +9,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AdminDashboard from "../AdminDashboard";
 import toast from "react-hot-toast";
+import crmlogo from "../../assets/crmlogo.png";
+import Create from "../Create";
+import Status from "../Status";
 
 const { Header, Content, Sider } = Layout;
 
@@ -17,25 +20,23 @@ const items = [
     key: "1",
     icon: <FontAwesomeIcon icon={faHouse} />,
     label: "Dashboard",
-    link: "/admin/dashboard",
   },
   {
     key: "2",
     icon: <FontAwesomeIcon icon={faCirclePlus} />,
     label: "Create Request",
-    link: "/createpage",
   },
   {
     key: "3",
     icon: <FontAwesomeIcon icon={faCheckCircle} />,
     label: "Check Status",
-    link: "/statuspage",
   },
 ];
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [logoutClicked, setLogoutClicked] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(items[0]);
   const navigate = useNavigate();
 
   const onCollapse = (collapsed) => {
@@ -62,30 +63,55 @@ const Dashboard = () => {
       });
   };
 
+  const handleMenuItemClick = (menuItem) => {
+    setSelectedMenuItem(menuItem);
+  };
+
+  let componentToRender;
+
+  // Determine which component to render based on selectedMenuItem
+  if (selectedMenuItem.label === "Dashboard") {
+    componentToRender = <AdminDashboard />;
+  } else if (selectedMenuItem.label === "Create Request") {
+    componentToRender = <Create />;
+  } else if (selectedMenuItem.label === "Check Status") {
+    componentToRender = <Status />;
+  } else {
+    // Default fallback if selectedMenuItem does not match any condition
+    componentToRender = <div>No component selected</div>;
+  }
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={onCollapse}
-        style={{ paddingTop: "64px" }}
+        style={{ backgroundColor: "white" }}
       >
-        <div className="logoo">
+        <div style={{ height: "10%" }}>
           <img
-            src="https://i.ibb.co/JqznVLM/LOGO.png"
+            src={crmlogo}
             alt=""
             style={{
-              width: "60px",
-              height: "60px",
-              marginLeft: "40px",
-              marginTop: "-80px",
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
             }}
           />
         </div>
-        <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+
+        <Menu
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          style={{ height: "90%" }}
+        >
           {items.map((item) => (
-            <Menu.Item key={item.key} icon={item.icon}>
+            <Menu.Item
+              key={item.key}
+              icon={item.icon}
+              onClick={() => handleMenuItemClick(item)}
+            >
               <Link to={item.link} style={{ textDecoration: "none" }}>
                 {item.label}
               </Link>
@@ -104,7 +130,9 @@ const Dashboard = () => {
             padding: "0 16px",
           }}
         >
-          <div style={{ color: "#fff", fontSize: "17px" }}>Dashboard</div>
+          <div style={{ color: "#fff", fontSize: "17px" }}>
+            {selectedMenuItem.label}
+          </div>
           <div>
             <button
               onClick={handleLogout}
@@ -119,10 +147,10 @@ const Dashboard = () => {
             </button>
           </div>
         </Header>
-        <Content style={{ margin: "0 16px" }}>
+        <Content style={{ margin: "0 16px", overflowY: "auto" }}>
           <div style={{ margin: "16px 0" }}>
             <Breadcrumb>
-              <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+              <Breadcrumb.Item>{`Maintain ${selectedMenuItem.label}`}</Breadcrumb.Item>
             </Breadcrumb>
           </div>
           <div
@@ -132,9 +160,11 @@ const Dashboard = () => {
               minHeight: 360,
               background: "#fff",
               borderRadius: "5px",
+              overflowY: "auto", // Enable scrolling within the content area
+              maxHeight: "calc(100vh - 130px)", // Adjust the maximum height as needed
             }}
           >
-            <AdminDashboard />
+            {componentToRender}
           </div>
         </Content>
       </Layout>
