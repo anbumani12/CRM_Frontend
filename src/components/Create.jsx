@@ -61,6 +61,7 @@ function Create() {
         alignItems: "center",
         marginLeft: "16px",
         marginRight: "16px",
+        padding: "20px", // added padding to the backWrapper
       }}
     >
       <div
@@ -69,81 +70,53 @@ function Create() {
           backgroundColor: "rgba(255, 255, 255, 0.9)",
           backdropFilter: "blur(10px)",
           maxWidth: "450px",
-          padding: "50px",
-          height: "75vh",
+          padding: "30px", // added padding to the loginWrapper
         }}
       >
-        <div>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-2" controlId="formName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Name"
-                name="name"
-                required
-              />
-            </Form.Group>
+        <h2 className="text-center mb-4">Create Service Request</h2>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formName">
+            <Form.Label>Name</Form.Label>
+            <Form.Control type="text" placeholder="Name" name="name" required />
+          </Form.Group>
 
-            <Form.Group className="mb-2" controlId="formEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                name="email"
-                required
-              />
-            </Form.Group>
+          <Form.Group className="mb-3" controlId="formEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" name="email" required />
+          </Form.Group>
 
-            <Form.Group className="mb-2" controlId="formMobile">
-              <Form.Label>Mobile</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Mobile"
-                name="mobile"
-                required
-              />
-            </Form.Group>
+          <Form.Group className="mb-3" controlId="formMobile">
+            <Form.Label>Mobile</Form.Label>
+            <Form.Control type="text" placeholder="Mobile" name="mobile" required />
+          </Form.Group>
 
-            <Form.Group className="mb-2" controlId="formCategory">
-              <Form.Label>Category</Form.Label>
-              <Form.Select defaultValue={"default"} name="category" required>
-                <option value="default" disabled>
-                  Select Category
-                </option>
-                <option value="Maintenance">Maintenance</option>
-                <option value="Housekeeping">Housekeeping</option>
-                <option value="Enquiry">Enquiry</option>
-              </Form.Select>
-            </Form.Group>
+          <Form.Group className="mb-3" controlId="formCategory">
+            <Form.Label>Category</Form.Label>
+            <Form.Select defaultValue={"default"} name="category" required>
+              <option value="default" disabled>
+                Select Category
+              </option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Housekeeping">Housekeeping</option>
+              <option value="Enquiry">Enquiry</option>
+            </Form.Select>
+          </Form.Group>
 
-            <Form.Group className="mb-2" controlId="formTitle">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Title"
-                name="title"
-                required
-              />
-            </Form.Group>
-            <div style={{ marginBottom: "15px" }}></div>
-            <Form.Group className="mb-2" controlId="formDescription">
-              <FloatingLabel controlId="formDescription" label="Description">
-                <Form.Control
-                  as="textarea"
-                  placeholder="Leave a comment here"
-                  style={{ height: "80px" }}
-                  name="description"
-                  required
-                />
-              </FloatingLabel>
-            </Form.Group>
+          <Form.Group className="mb-3" controlId="formTitle">
+            <Form.Label>Title</Form.Label>
+            <Form.Control type="text" placeholder="Title" name="title" required />
+          </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </div>
+          <Form.Group className="mb-3" controlId="formDescription">
+            <FloatingLabel controlId="formDescription" label="Description">
+              <Form.Control as="textarea" placeholder="Leave a comment here" style={{ height: "80px" }} name="description" required />
+            </FloatingLabel>
+          </Form.Group>
+
+          <Button variant="primary" type="submit" className="w-100">
+            Submit
+          </Button>
+        </Form>
       </div>
     </div>
   );
