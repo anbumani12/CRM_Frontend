@@ -160,8 +160,8 @@ const Dashboard = () => {
               minHeight: 360,
               background: "#fff",
               borderRadius: "5px",
-              overflowY: "auto", // Enable scrolling within the content area
-              maxHeight: "calc(100vh - 130px)", // Adjust the maximum height as needed
+              overflowY: "auto", 
+              maxHeight: "calc(100vh - 130px)", 
             }}
           >
             {componentToRender}

@@ -7,9 +7,9 @@ import {
   faCirclePlus,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
-
-import toast from "react-hot-toast";
 import Viewpage from "../Viewpage";
+import toast from "react-hot-toast";
+import crmlogo from "../../assets/crmlogo.png";
 
 const { Header, Content, Sider } = Layout;
 
@@ -18,25 +18,23 @@ const items = [
     key: "1",
     icon: <FontAwesomeIcon icon={faHouse} />,
     label: "Dashboard",
-    link: "/admin/dashboard",
   },
   {
     key: "2",
     icon: <FontAwesomeIcon icon={faCirclePlus} />,
     label: "Create Request",
-    link: "/createpage",
   },
   {
     key: "3",
     icon: <FontAwesomeIcon icon={faCheckCircle} />,
     label: "Check Status",
-    link: "/statuspage",
   },
 ];
 
 const Service = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [logoutClicked, setLogoutClicked] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(items[0]);
   const navigate = useNavigate();
 
   const onCollapse = (collapsed) => {
@@ -53,7 +51,7 @@ const Service = () => {
           }, 2000);
         }),
         {
-          loading: "Loading...",
+          loading: "Logging out...",
           success: "Back to Dashboard",
           error: "Logout Failed",
         }
@@ -63,18 +61,49 @@ const Service = () => {
       });
   };
 
+  const handleMenuItemClick = (menuItem) => {
+    setSelectedMenuItem(menuItem);
+  };
+
+  let componentToRender;
+
+  if (selectedMenuItem.label === "Dashboard") {
+    componentToRender = <Viewpage />;
+  } else {
+    componentToRender = <div>No component selected</div>;
+  }
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={onCollapse}
-        style={{ paddingTop: "64px" }}
+        style={{ backgroundColor: "white" }}
       >
-        <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <div style={{ height: "10%" }}>
+          <img
+            src={crmlogo}
+            alt=""
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+
+        <Menu
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          style={{ height: "90%" }}
+        >
           {items.map((item) => (
-            <Menu.Item key={item.key} icon={item.icon}>
+            <Menu.Item
+              key={item.key}
+              icon={item.icon}
+              onClick={() => handleMenuItemClick(item)}
+            >
               <Link to={item.link} style={{ textDecoration: "none" }}>
                 {item.label}
               </Link>
@@ -82,6 +111,7 @@ const Service = () => {
           ))}
         </Menu>
       </Sider>
+
       <Layout className="site-layout">
         <Header
           className="site-layout-background"
@@ -92,7 +122,9 @@ const Service = () => {
             padding: "0 16px",
           }}
         >
-          <div style={{ color: "#fff", fontSize: "17px" }}>Dashboard</div>
+          <div style={{ color: "#fff", fontSize: "17px" }}>
+            {selectedMenuItem.label}
+          </div>
           <div>
             <button
               onClick={handleLogout}
@@ -107,10 +139,10 @@ const Service = () => {
             </button>
           </div>
         </Header>
-        <Content style={{ margin: "0 16px" }}>
+        <Content style={{ margin: "0 16px", overflowY: "auto" }}>
           <div style={{ margin: "16px 0" }}>
             <Breadcrumb>
-              <Breadcrumb.Item>View Page</Breadcrumb.Item>
+              <Breadcrumb.Item>{`Maintain ${selectedMenuItem.label}`}</Breadcrumb.Item>
             </Breadcrumb>
           </div>
           <div
@@ -120,9 +152,11 @@ const Service = () => {
               minHeight: 360,
               background: "#fff",
               borderRadius: "5px",
+              overflowY: "auto",
+              maxHeight: "calc(100vh - 130px)",
             }}
           >
-            <Viewpage />
+            {componentToRender}
           </div>
         </Content>
       </Layout>
