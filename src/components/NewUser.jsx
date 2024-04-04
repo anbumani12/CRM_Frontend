@@ -127,7 +127,7 @@ export default function SignUp() {
               marginLeft: "30px",
               width: "100%",
               height: "100%",
-              marginTop:"40px" 
+              marginTop:"10px" 
             }}
           >
             <Avatar
