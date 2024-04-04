@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -7,6 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import ApiRoutes from "../utils/ApiRoutes";
+
 
 function Create() {
   const navigate = useNavigate();
@@ -20,7 +20,14 @@ function Create() {
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
-    const requiredFields = ["name", "email", "mobile", "category", "title", "description"];
+    const requiredFields = [
+      "name",
+      "email",
+      "mobile",
+      "category",
+      "title",
+      "description",
+    ];
     const emptyFields = requiredFields.filter((field) => !formProps[field]);
 
     if (emptyFields.length > 0) {
@@ -37,11 +44,9 @@ function Create() {
         toast.success("Service Request Created Successfully", {
           duration: 2000,
         });
-        
-        // Clear form fields
+
         e.target.reset();
-        
-        // Display toast message for email sent
+
         toast.success("Email Sent Successfully", { duration: 2000 });
       }
     } catch (error) {
@@ -50,30 +55,8 @@ function Create() {
   };
 
   return (
-    <div
-      className="backWrapper"
-      style={{
-        backgroundImage: `url("https://t3.ftcdn.net/jpg/02/58/66/94/360_F_258669413_rLs4pnnhkUkExE9m8EZuhGbnkJI0izgQ.jpg")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "83vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginLeft: "16px",
-        marginRight: "16px",
-        padding: "20px", // added padding to the backWrapper
-      }}
-    >
-      <div
-        className="loginWrapper border rounded shadow-sm p-4"
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.9)",
-          backdropFilter: "blur(10px)",
-          maxWidth: "450px",
-          padding: "30px", // added padding to the loginWrapper
-        }}
-      >
+    <div className="backWrapper">
+      <div className="loginWrapper border rounded shadow-sm p-4">
         <h2 className="text-center mb-4">Create Service Request</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formName">
@@ -83,12 +66,22 @@ function Create() {
 
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" name="email" required />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              name="email"
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formMobile">
             <Form.Label>Mobile</Form.Label>
-            <Form.Control type="text" placeholder="Mobile" name="mobile" required />
+            <Form.Control
+              type="text"
+              placeholder="Mobile"
+              name="mobile"
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formCategory">
@@ -105,12 +98,23 @@ function Create() {
 
           <Form.Group className="mb-3" controlId="formTitle">
             <Form.Label>Title</Form.Label>
-            <Form.Control type="text" placeholder="Title" name="title" required />
+            <Form.Control
+              type="text"
+              placeholder="Title"
+              name="title"
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formDescription">
             <FloatingLabel controlId="formDescription" label="Description">
-              <Form.Control as="textarea" placeholder="Leave a comment here" style={{ height: "80px" }} name="description" required />
+              <Form.Control
+                as="textarea"
+                placeholder="Leave a comment here"
+                style={{ height: "80px" }}
+                name="description"
+                required
+              />
             </FloatingLabel>
           </Form.Group>
 
