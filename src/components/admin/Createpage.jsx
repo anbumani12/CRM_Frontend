@@ -142,6 +142,7 @@ const Createpage = () => {
               <Spin size="large" />
             </div>
           ) : (
+            
             <Create />
           )}
         </Content>
