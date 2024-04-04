@@ -5,8 +5,6 @@ import SuperAdminProtectedRoute from "./SuperAdminProtectedRoute";
 import AdminRoutes from "./AdminRoutes";
 import { Navigate } from "react-router-dom";
 import NewUser from "../components/NewUser";
-import Createpage from "../components/admin/Createpage";
-import Statuspage from "../components/admin/Statuspage";
 import Viewpage from "../components/Viewpage";
 
 const Approutes = [
@@ -16,10 +14,6 @@ const Approutes = [
   },
 
   {
-    path: "/createpage",
-    element: <Createpage />,
-  },
-  {
     path: "/new-user",
     element: <NewUser />,
   },
@@ -27,10 +21,7 @@ const Approutes = [
     path: "/admin/dashboard",
     element: <Dashboard />,
   },
-  {
-    path: "/statuspage",
-    element: <Statuspage />,
-  },
+
   {
     path: "/sevice",
     element: <Service />,

@@ -69,7 +69,6 @@ const Service = () => {
 
   let componentToRender;
 
-  // Determine which component to render based on selectedMenuItem
   if (selectedMenuItem.label === "Dashboard") {
     componentToRender = <Viewpage />;
   } else if (selectedMenuItem.label === "Create Request") {
@@ -77,7 +76,6 @@ const Service = () => {
   } else if (selectedMenuItem.label === "Check Status") {
     componentToRender = <Status />;
   } else {
-    // Default fallback if selectedMenuItem does not match any condition
     componentToRender = <div>No component selected</div>;
   }
 
