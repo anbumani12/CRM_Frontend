@@ -127,10 +127,11 @@ export default function SignUp() {
               marginLeft: "30px",
               width: "100%",
               height: "100%",
+              marginTop:"40px" 
             }}
           >
             <Avatar
-              sx={{ m: 1, bgcolor: "secondary.main", marginLeft: "150px" }}
+              sx={{ m: 1, bgcolor: "secondary.main", marginLeft: "150px"}}
             >
               <LockOutlinedIcon />
             </Avatar>
