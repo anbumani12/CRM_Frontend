@@ -8,6 +8,8 @@ import {
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import Viewpage from "../Viewpage";
+import Create from "../Create";
+import Status from "../Status";
 import toast from "react-hot-toast";
 import crmlogo from "../../assets/crmlogo.png";
 
@@ -67,9 +69,15 @@ const Service = () => {
 
   let componentToRender;
 
+  // Determine which component to render based on selectedMenuItem
   if (selectedMenuItem.label === "Dashboard") {
     componentToRender = <Viewpage />;
+  } else if (selectedMenuItem.label === "Create Request") {
+    componentToRender = <Create />;
+  } else if (selectedMenuItem.label === "Check Status") {
+    componentToRender = <Status />;
   } else {
+    // Default fallback if selectedMenuItem does not match any condition
     componentToRender = <div>No component selected</div>;
   }
 

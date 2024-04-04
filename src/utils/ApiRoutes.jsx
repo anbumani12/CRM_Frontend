@@ -1,7 +1,7 @@
 const ApiRoutes = {
     USER_LOGIN: {
       path: "/users/login",
-      authenticate: false,
+      authenticate: true,
     },
     USERS: {
       path: "/users",
@@ -14,7 +14,7 @@ const ApiRoutes = {
     },
     SR: {
       path: "/sr",
-      authenticate: false,
+      authenticate: true,
     },
     DASHBOARD_COUNT: {
       path: "/admin/dashboard-count",
