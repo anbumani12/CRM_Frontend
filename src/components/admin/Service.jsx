@@ -53,7 +53,7 @@ const Service = () => {
           }, 2000);
         }),
         {
-          loading: "Logging out...",
+          loading: "Getting back...",
           success: "Back to Dashboard",
           error: "Logout Failed",
         }
