@@ -91,6 +91,10 @@ function AdminDashboard() {
     getDashboardCount();
   }, []);
 
+  const handleViewButtonClick = (no) => {
+    navigate(`/admin/service/${no}`);
+  };
+
   return (
     <>
       <div style={{ textAlign: "center" }}>
@@ -199,7 +203,7 @@ function AdminDashboard() {
                       <td>
                         <Button
                           variant="primary"
-                          onClick={() => navigate(`/admin/service/${e.no}`)}
+                          onClick={() => handleViewButtonClick(e.no)}
                         >
                           View
                         </Button>
