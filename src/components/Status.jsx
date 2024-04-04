@@ -8,7 +8,6 @@ import Table from "react-bootstrap/Table";
 
 function Status() {
   let [data, setData] = useState({});
-  const [showToast, setShowToast] = useState(false);
 
   const getSrDetails = async (e) => {
     e.preventDefault();
@@ -17,10 +16,7 @@ function Status() {
     let srno = formProps.srno;
 
     if (!srno) {
-      if (!showToast) {
-        toast.error("Please enter a valid SR No");
-        setShowToast(true);
-      }
+      toast.error("Please enter a valid SR No");
       return;
     }
 
@@ -30,17 +26,11 @@ function Status() {
       });
 
       if (res.status === 200) {
-        if (!showToast) {
-          toast.success("Data Fetch Successfully");
-          setShowToast(true);
-        }
+        toast.success("Data Fetch Successfully");
         setData(res.data.data);
       }
     } catch (error) {
-      if (!showToast) {
-        toast.error(error.response.data.message);
-        setShowToast(true);
-      }
+      toast.error(error.response.data.message);
     }
   };
 
