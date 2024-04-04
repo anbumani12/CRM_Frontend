@@ -92,6 +92,7 @@ function AdminDashboard() {
   }, []);
 
   const handleViewButtonClick = (no) => {
+    console.log("View button clicked with no:", no);
     navigate(`/admin/service/${no}`);
   };
 
