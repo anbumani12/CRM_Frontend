@@ -19,14 +19,7 @@ function Create() {
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
-    const requiredFields = [
-      "name",
-      "email",
-      "mobile",
-      "category",
-      "title",
-      "description",
-    ];
+    const requiredFields = ["name", "email", "mobile", "category", "title", "description"];
     const emptyFields = requiredFields.filter((field) => !formProps[field]);
 
     if (emptyFields.length > 0) {
@@ -43,22 +36,15 @@ function Create() {
         toast.success("Service Request Created Successfully", {
           duration: 2000,
         });
-        setTimeout(() => {
-          navigate("/status");
-          sendEmail(); // Call the function to send email
-        }, 2000);
+        
+        // Clear form fields
+        e.target.reset();
+        
+        // Display toast message for email sent
+        toast.success("Email Sent Successfully", { duration: 2000 });
       }
     } catch (error) {
       toast.error(error.response.data.message);
-    }
-  };
-
-  const sendEmail = async () => {
-    try {
-      // Display toast message for email sent
-      toast.success("Email Sent Successfully", { duration: 2000 });
-    } catch (error) {
-      toast.error("Failed to send email");
     }
   };
 
