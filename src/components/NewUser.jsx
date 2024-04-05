@@ -119,7 +119,7 @@ export default function SignUp() {
         <Container component="main" maxWidth="xs">
           <Box
             sx={{
-              mt: 9,
+              mt: 7,
               border: "1px solid #ccc",
               borderRadius: "5px",
               padding: "20px",
@@ -127,7 +127,7 @@ export default function SignUp() {
               marginLeft: "30px",
               width: "100%",
               height: "100%",
-              marginTop:"10px" 
+              
             }}
           >
             <Avatar
