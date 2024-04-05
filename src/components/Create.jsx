@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import ApiRoutes from "../utils/ApiRoutes";
 
-
 function Create() {
   const navigate = useNavigate();
 
@@ -107,15 +106,14 @@ function Create() {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formDescription">
-            <FloatingLabel controlId="formDescription" label="Description">
-              <Form.Control
-                as="textarea"
-                placeholder="Leave a comment here"
-                style={{ height: "80px" }}
-                name="description"
-                required
-              />
-            </FloatingLabel>
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              placeholder="Description"
+              style={{ height: "80px" }}
+              name="description"
+              required
+            />
           </Form.Group>
 
           <Button variant="primary" type="submit" className="w-100">
