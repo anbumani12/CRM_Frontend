@@ -87,7 +87,7 @@ function Viewpage() {
               {Object.keys(data).map((e, i) => {
                 return (
                   <tr key={i}>
-                    <td>{e}</td>
+                    <td>{e.toUpperCase()}</td>
                     <td>{data[e] !== null ? data[e] : "-"}</td>
                   </tr>
                 );
