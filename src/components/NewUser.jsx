@@ -51,7 +51,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "https://capstone-vbjb.onrender.com/users/create",
+        "https://crm-backend-dcsw.onrender.com/users/create",
         {
           method: "POST",
           headers: {
